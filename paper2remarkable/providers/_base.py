@@ -36,7 +36,8 @@ class Provider(metaclass=abc.ABCMeta):
     def __init__(
         self,
         verbose=False,
-        upload=True,
+        # upload=True,
+        upload=False,
         debug=False,
         experimental=False,
         crop="left",
@@ -105,9 +106,7 @@ class Provider(metaclass=abc.ABCMeta):
         return prepare_pdf(filepath, "crop", pdftoppm_path=self.pdftoppm_path)
 
     def center_pdf(self, filepath):
-        return prepare_pdf(
-            filepath, "center", pdftoppm_path=self.pdftoppm_path
-        )
+        return prepare_pdf(filepath, "center", pdftoppm_path=self.pdftoppm_path)
 
     def right_pdf(self, filepath):
         return prepare_pdf(filepath, "right", pdftoppm_path=self.pdftoppm_path)
@@ -121,6 +120,7 @@ class Provider(metaclass=abc.ABCMeta):
         download_url(pdf_url, filename, cookiejar=self.cookiejar)
 
     def compress_pdf(self, in_pdf, out_pdf):
+        return 0
         """ Compress a pdf file, returns subprocess status """
         if self.pdftool == "pdftk":
             status = subprocess.call(
@@ -146,6 +146,8 @@ class Provider(metaclass=abc.ABCMeta):
 
         This helps avoid issues in dearxiv due to nested pdfs.
         """
+        return in_pdf
+
         if out_pdf is None:
             out_pdf = os.path.splitext(in_pdf)[0] + "-rewrite.pdf"
 
@@ -160,13 +162,12 @@ class Provider(metaclass=abc.ABCMeta):
             ]
         )
         if not status == 0:
-            raise _CalledProcessError(
-                "Failed to rewrite the pdf with GhostScript"
-            )
+            raise _CalledProcessError("Failed to rewrite the pdf with GhostScript")
         return out_pdf
 
     def uncompress_pdf(self, in_pdf, out_pdf):
         """ Uncompress a pdf file """
+        return 0
 
         if self.pdftool == "pdftk":
             status = subprocess.call(

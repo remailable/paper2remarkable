@@ -19,9 +19,7 @@ from ..log import Logger
 logger = Logger()
 
 DEARXIV_TEXT_REGEX = b"ar(x|X)iv:(\d{4}\.|[\w\-]+\/)\d+v\d+(\s+\[[\w\-]+\.[\w\-]+\])?\s+\d{1,2}\s\w{3}\s\d{4}"
-DEARXIV_URI_REGEX = (
-    b"https?://ar(x|X)iv\.org\/abs\/([\w\-]+\/\d+|\d{4}\.\d{4,5})v\d+"
-)
+DEARXIV_URI_REGEX = b"https?://ar(x|X)iv\.org\/abs\/([\w\-]+\/\d+|\d{4}\.\d{4,5})v\d+"
 
 
 class ArxivInformer(Informer):
@@ -68,6 +66,7 @@ class Arxiv(Provider):
 
     def dearxiv(self, input_file):
         """Remove the arXiv timestamp from a pdf"""
+        return input_file
         logger.info("Removing arXiv timestamp ... ", end="")
         basename = os.path.splitext(input_file)[0]
 
@@ -97,8 +96,7 @@ class Arxiv(Provider):
                     objid = int(line.split(b" ")[0])
                     xref[objid] = char_count
                 elif current_obj and (
-                    line.startswith(b"endobj")
-                    and not line.startswith(b"endobj xref")
+                    line.startswith(b"endobj") and not line.startswith(b"endobj xref")
                 ):
                     # End the current object. If needed, replace the arXiv
                     # stamp in the block (done only once). Reset current
@@ -113,9 +111,7 @@ class Arxiv(Provider):
                     )
                     # remove the url (type 1)
                     block, n_subs2 = re.subn(
-                        b"<<\n\/URI \("
-                        + DEARXIV_URI_REGEX
-                        + b"\)\n\/S /URI\n>>\n",
+                        b"<<\n\/URI \(" + DEARXIV_URI_REGEX + b"\)\n\/S /URI\n>>\n",
                         b"",
                         block,
                     )

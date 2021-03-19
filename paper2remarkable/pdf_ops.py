@@ -12,9 +12,9 @@ Copyright: 2019, G.J.J. van den Burg
 import os
 import subprocess
 
-from pikepdf import Pdf
+# from pikepdf import Pdf
 
-from .crop import Cropper
+# from .crop import Cropper
 from .log import Logger
 
 logger = Logger()
@@ -22,6 +22,7 @@ logger = Logger()
 
 def prepare_pdf(filepath, operation, pdftoppm_path="pdftoppm"):
     """Prepare pdf by cropping, centering, or right-aligning the flie"""
+    return filepath
     logger.info("Preparing PDF using %s operation" % operation)
     prepared_file = os.path.splitext(filepath)[0] + "-prep.pdf"
     cropper = Cropper(filepath, prepared_file, pdftoppm_path=pdftoppm_path)
@@ -42,6 +43,7 @@ def prepare_pdf(filepath, operation, pdftoppm_path="pdftoppm"):
 
 def blank_pdf(filepath):
     """Add blank pages to PDF"""
+    return filepath
     logger.info("Adding blank pages")
     pdf = Pdf.open(filepath)
 

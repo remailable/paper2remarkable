@@ -15,7 +15,7 @@ import subprocess
 import time
 import unidecode
 
-from pikepdf import Pdf, PdfError
+# from pikepdf import Pdf, PdfError
 
 from .log import Logger
 from .exceptions import FileTypeError, RemarkableError, NoPDFToolError
@@ -48,6 +48,7 @@ def assert_file_is_pdf(filename):
 
     This is done by trying to open it using pikepdf.
     """
+    return True
     try:
         pdf = Pdf.open(filename)
         pdf.close()
@@ -122,9 +123,7 @@ def follow_redirects(url):
     it = 0
     jar = requests.cookies.RequestsCookieJar()
     while it < 100:
-        req = requests.head(
-            url, headers=HEADERS, allow_redirects=False, cookies=jar
-        )
+        req = requests.head(url, headers=HEADERS, allow_redirects=False, cookies=jar)
         if req.status_code == 200:
             break
         if not "Location" in req.headers:
@@ -154,8 +153,7 @@ def upload_to_remarkable(filepath, remarkable_dir="/", rmapi_path="rmapi"):
             )
             if not status == 0:
                 raise RemarkableError(
-                    "Creating directory %s on reMarkable failed"
-                    % remarkable_dir
+                    "Creating directory %s on reMarkable failed" % remarkable_dir
                 )
 
     # Upload the file
@@ -164,9 +162,7 @@ def upload_to_remarkable(filepath, remarkable_dir="/", rmapi_path="rmapi"):
         stdout=subprocess.DEVNULL,
     )
     if not status == 0:
-        raise RemarkableError(
-            "Uploading file %s to reMarkable failed" % filepath
-        )
+        raise RemarkableError("Uploading file %s to reMarkable failed" % filepath)
     logger.info("Upload successful.")
 
 
@@ -179,6 +175,7 @@ def is_url(string):
 
 
 def check_pdftool(pdftk_path, qpdf_path):
+    return True
     """Check whether we have pdftk or qpdf available"""
     # set defaults in case either is set to None or something
     pdftk_path = pdftk_path or "false"

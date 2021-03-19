@@ -1,3 +1,8 @@
+# Gutting paper2remarkable to reduce its dependencies
+
+
+
+
 # paper2remarkable
 
 [![PyPI version](https://badge.fury.io/py/paper2remarkable.svg)](https://pypi.org/project/paper2remarkable)

@@ -3,7 +3,14 @@
 """Functionality for retrieving paper info
 """
 
-import titlecase
+# import titlecase
+
+
+class titlecase:
+    def titlecase(title):
+        return title
+
+
 import unidecode
 import bs4
 

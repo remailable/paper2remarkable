@@ -1,7 +1,7 @@
 # Gutting paper2remarkable to reduce its dependencies
 
-
-
+Basically gutting this lovely codebase in order to modularise this.
+Feel pretty bad for destroying his work.
 
 # paper2remarkable
 

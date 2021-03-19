@@ -210,6 +210,10 @@ class Provider(metaclass=abc.ABCMeta):
         clean_filename = filename or self.informer.get_filename(abs_url)
         tmp_filename = "paper.pdf"
 
+        # TODO: Remove all of this stuff.
+        # Refactor retrieve_pdf to return a string of bytes instead.
+        # Think about how to handle HTML though.
+
         self.initial_dir = os.getcwd()
         with tempfile.TemporaryDirectory(prefix="p2r_") as working_dir:
             os.chdir(working_dir)
